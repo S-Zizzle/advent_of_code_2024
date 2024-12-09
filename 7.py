@@ -3,24 +3,46 @@ problems = {}
 with open('7_input.txt', 'r') as file:
     for line in file:
         line = line.split(':')
-        # THIS ASSUMES THERE IS ONLY EVER 1 OF EACH ANSWER.....
-        if line[0] in problems: print("UH OH!!!!!!!!!!!!!!!!!!!!!", line[0])
-        problems[line[0]] = list(line[1].strip('\n').strip().split(' '))
 
-for answer, numbers in problems.items():
-    # add + between every number
-    nums = []
-    for i in range(len(numbers)):
-        nums.append(numbers[i])
-        if i < len(numbers) - 1:
-            nums.append('+')
-    
-    # try every combination of changing + for * until we find answer or end up with no +
-    for i in range(1, len(nums)-1, 2):
-        #calculate and see if good, of yes the add answer to counter and continue parent loop
+        if line[0] in problems:
+            problems[int(line[0])].append(list(map(int, line[1].strip('\n').strip().split(' '))))
+        else:
+            problems[int(line[0])] = [list(map(int, line[1].strip('\n').strip().split(' ')))]
+
+def recurse(equation, answer):
+    if len(equation) == 1:
+        if equation[0] == answer:
+            return True
+        else:
+            return False
+            
+    this = equation[:2]
+
+    p = this[0] + this[1]
+    m = this[0] * this[1]
+
+    equation = equation[2:]
+
+    p_equation = equation.copy()
+    m_equation = equation.copy()
+
+    p_equation.insert(0, p)
+    m_equation.insert(0, m)
+
+    p_result = recurse(p_equation, answer)
+    m_result = recurse(m_equation, answer)
+
+    return True in [p_result, m_result]
+
+count = 0
+
+for answer, numbersets in problems.items():
+    for numbers in numbersets:
+        print(numbers)
         
-        #not good
-        # if no + in list then continue big loop
+        found = recurse(numbers, answer)
 
-        # change value at ith position to *
-        pass
+        if found:
+            count += answer
+
+print(count)
