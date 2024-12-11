@@ -38,11 +38,11 @@ count = 0
 
 for answer, numbersets in problems.items():
     for numbers in numbersets:
-        print(numbers)
-        
+
         found = recurse(numbers, answer)
 
         if found:
+            print(answer)
             count += answer
 
 print(count)

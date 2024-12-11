@@ -59,13 +59,26 @@ for row in grid:
 
 print(f"Part one count: {p1_count}")
 
+#for i in row
+#for j in col
+#have data of visited nodes
+# run mainloop
+# keep map of places we've been and direction facing
+# if wwe've already been on this tile facing this direction then we are looping
+
+''' This is trying to do the clever way. For now just brute force it
 obstacles = []
+p2_count = 0
 
 for irow, row in enumerate(grid):
     for icol, char in enumerate(row):
         if char == '#':
             obstacles.append((irow, icol))
 
-for (i, j) in obstacles:
-    for a in [-1, 1]:
-        pass
+for ob1 in obstacles:
+    for ob2 in obstacles:
+        for ob3 in obstacles:
+            if ob1 == ob2 or ob1 == ob3 or ob2 == ob3: continue
+
+            #check if ob1, 2, 3 line up like the drawing. if they do then +1 to counter
+'''
